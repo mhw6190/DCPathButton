@@ -19,6 +19,7 @@
 - (instancetype)initWithImage:(UIImage *)image
              highlightedImage:(UIImage *)highlightedImage
              backgroundImage:(UIImage *)backgroundImage
+             backgroundHighlightedImage:(UIImage *)backgroundHighlightedImage
              buttonTitle:(NSString *)buttonTitle
 {
     if (self = [super init]) {
