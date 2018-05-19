@@ -47,8 +47,9 @@
  *  @return A `DCPathItemButton` object.
  */
 - (instancetype)initWithImage:(UIImage *)image
-             highlightedImage:(UIImage *)highlightedImage
-              backgroundImage:(UIImage *)backgroundImage
-   backgroundHighlightedImage:(UIImage *)backgroundHighlightedImage;
+            highlightedImage:(UIImage *)highlightedImage
+            backgroundImage:(UIImage *)backgroundImage
+            backgroundHighlightedImage:(UIImage *)backgroundHighlightedImage
+            buttonTitle:(NSString *)buttonTitle;
 
 @end

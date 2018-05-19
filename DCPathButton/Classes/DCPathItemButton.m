@@ -18,8 +18,8 @@
 
 - (instancetype)initWithImage:(UIImage *)image
              highlightedImage:(UIImage *)highlightedImage
-              backgroundImage:(UIImage *)backgroundImage
-   backgroundHighlightedImage:(UIImage *)backgroundHighlightedImage
+             backgroundImage:(UIImage *)backgroundImage
+             buttonTitle:(NSString *)buttonTitle
 {
     if (self = [super init]) {
         
@@ -43,7 +43,16 @@
                                                 highlightedImage:highlightedImage];
         _backgroundImageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         
+        UILabel *buttonLbl = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, itemFrame.size.width+22, backgroundImage.size.height+60)];
+        buttonLbl.textAlignment = NSTextAlignmentCenter;
+        [buttonLbl setTextColor:[UIColor whiteColor]];
+        [buttonLbl setBackgroundColor:[UIColor clearColor]];
+        [buttonLbl setFont:[UIFont fontWithName: @"Arial-BoldMT" size: 9.0f]];
+        buttonLbl.text = buttonTitle;
+        
         [self addSubview:_backgroundImageView];
+        [self addSubview:buttonLbl];
+
         
         // Add an action for the item button
         //

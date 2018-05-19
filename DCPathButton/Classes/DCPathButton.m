@@ -106,6 +106,12 @@
 
 - (void)configureViewsLayoutWithButtonSize:(CGSize)centerButtonSize {
     // Init some property only once
+    
+    // Handles notfications from tab bar
+    [[NSNotificationCenter defaultCenter] addObserver:self
+          selector:@selector(resetCenterButton:)
+          name:@"resetCenterButton"
+          object:nil];
     //
     self.foldedSize = centerButtonSize;
     self.bloomSize = [UIScreen mainScreen].bounds.size;
@@ -141,6 +147,7 @@
     _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.bloomSize.width * 2, self.bloomSize.height * 2)];
     _bottomView.backgroundColor = self.bottomViewColor;
     _bottomView.alpha = 0.0f;
+    _bottomView.userInteractionEnabled = NO;
     
 }
 
@@ -379,6 +386,8 @@
         AudioServicesPlaySystemSound(self.foldSound);
     }
     
+    [_pathCenterButton setImage:[UIImage imageNamed:@"cp-tab-bar-button"] forState:UIControlStateNormal];
+    
     CGFloat itemGapAngel = self.bloomAngel / (self.itemButtons.count - 1) ;
     CGFloat currentAngel = (180.0f - self. bloomAngel)/2.0f;
     
@@ -433,7 +442,7 @@
                      }
                      completion:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         // Remove the button items from the superview
         //
@@ -504,6 +513,7 @@
 
 - (void)pathCenterButtonBloom {
     
+    [_pathCenterButton setImage:[UIImage imageNamed:@"cp-tab-bar-button-down"] forState:UIControlStateNormal];
     // DCPathButton Delegate
     //
     if ([_delegate respondsToSelector:@selector(willPresentDCPathButtonItems:)]) {
@@ -721,5 +731,10 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer NS_AVAILABLE_IOS(7_0) {
     return YES;
 }
+
+- (void)resetCenterButton:(NSNotification*)notification{
+    
+        [_pathCenterButton setImage:[UIImage imageNamed:@"cp-tab-bar-button"] forState:UIControlStateNormal];
+    }
 
 @end
