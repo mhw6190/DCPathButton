@@ -208,5 +208,5 @@ typedef NS_ENUM(NSUInteger, kDCPathButtonBloomDirection) {
  *  @param pathItemButtons The item buttons to be added.
  */
 - (void)addPathItems:(NSArray *)pathItemButtons;
-
+- (void)closeCenterButton;
 @end

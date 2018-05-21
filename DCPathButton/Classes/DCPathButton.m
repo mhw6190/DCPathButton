@@ -46,7 +46,7 @@
                    highlightedImage:(UIImage *)centerHighlightedImage {
     return [self initWithButtonFrame:CGRectZero
                          centerImage:centerImage
-                      highlightedImage:centerHighlightedImage];
+                    highlightedImage:centerHighlightedImage];
 }
 
 - (instancetype)initWithButtonFrame:(CGRect)centerButtonFrame
@@ -85,7 +85,7 @@
         _bloomSoundPath = [[NSBundle bundleForClass:[self class]]pathForResource:@"bloom" ofType:@"caf"];
         _foldSoundPath = [[NSBundle bundleForClass:[self class]]pathForResource:@"fold" ofType:@"caf"];
         _itemSoundPath = [[NSBundle bundleForClass:[self class]]pathForResource:@"selected" ofType:@"caf"];
-
+        
         _allowSounds = YES;
         
         _bottomViewColor = [UIColor blackColor];
@@ -109,9 +109,9 @@
     
     // Handles notfications from tab bar
     [[NSNotificationCenter defaultCenter] addObserver:self
-          selector:@selector(resetCenterButton:)
-          name:@"resetCenterButton"
-          object:nil];
+                                             selector:@selector(resetCenterButton:)
+                                                 name:@"resetCenterButton"
+                                               object:nil];
     //
     self.foldedSize = centerButtonSize;
     self.bloomSize = [UIScreen mainScreen].bounds.size;
@@ -144,7 +144,7 @@
     
     // Configure bottom view
     //
-    _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.bloomSize.width * 2, self.bloomSize.height * 2)];
+    _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     _bottomView.backgroundColor = self.bottomViewColor;
     _bottomView.alpha = 0.0f;
     _bottomView.userInteractionEnabled = NO;
@@ -193,7 +193,7 @@
     // Configure bloom sound
     //
     NSURL *bloomSoundURL = [NSURL fileURLWithPath:self.bloomSoundPath];
-
+    
     // Configure fold sound
     //
     NSURL *foldSoundURL = [NSURL fileURLWithPath:self.foldSoundPath];
@@ -360,7 +360,7 @@
             
             return CGPointMake(self.pathCenterButtonBloomCenter.x + cosf((angel + 1.25) * M_PI) * itemExpandRadius,
                                self.pathCenterButtonBloomCenter.y + sinf((angel + 1.25) * M_PI) * itemExpandRadius);
-        
+            
         default:
             
             NSAssert(self.bloomDirection, @"DCPathButtonError: An error occur when you configuring the bloom direction");
@@ -588,8 +588,8 @@
         CGPoint nearPoint = [self createEndPointWithRadius:self.bloomRadius - 5.0f andAngel:currentAngel/180.0f];
         
         CAAnimationGroup *bloomAnimation = [self bloomAnimationWithEndPoint:endPoint
-                                                                  andFarPoint:farPoint
-                                                                andNearPoint:nearPoint];
+                                                                andFarPoint:farPoint
+                                                               andNearPoint:nearPoint];
         
         [pathItemButton.layer addAnimation:bloomAnimation
                                     forKey:@"bloomAnimation"];
@@ -611,6 +611,14 @@
     }
     
 }
+
+// Close center button
+
+- (void)closeCenterButton {
+    
+    [self pathCenterButtonFold];
+}
+
 
 - (CAAnimationGroup *)bloomAnimationWithEndPoint:(CGPoint)endPoint
                                      andFarPoint:(CGPoint)farPoint
@@ -710,11 +718,11 @@
         if ([_delegate respondsToSelector:@selector(willDismissDCPathButtonItems:)]) {
             [_delegate willDismissDCPathButtonItems:self];
         }
-
+        
         // Resize the DCPathButton's frame
         //
         [self resizeToFoldedFrame];
-
+        
         if ([_delegate respondsToSelector:@selector(didDismissDCPathButtonItems:)]) {
             [_delegate didDismissDCPathButtonItems:self];
         }
@@ -734,7 +742,7 @@
 
 - (void)resetCenterButton:(NSNotification*)notification{
     
-        [_pathCenterButton setImage:[UIImage imageNamed:@"cp-tab-bar-button"] forState:UIControlStateNormal];
-    }
+    [_pathCenterButton setImage:[UIImage imageNamed:@"cp-tab-bar-button"] forState:UIControlStateNormal];
+}
 
 @end
